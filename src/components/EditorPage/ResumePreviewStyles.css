@@ -352,3 +352,31 @@ li {
     background-color: #fff;
     border-radius: 4px;
 }
+
+/*** Profile Image ***/
+.profile-image-container {
+    margin-bottom: var(--section-spacing);
+    text-align: center; /* Center image in sidebar */
+}
+
+.main-image-container {
+    float: right; /* Float image to the right in main content */
+    margin-left: var(--content-spacing);
+    margin-bottom: var(--content-spacing); /* Add some space below the image */
+    max-width: 150px; /* Or your desired max width */
+}
+
+.profile-image {
+    max-width: 100%;
+    height: auto;
+    display: block; /* Remove extra space below image */
+    margin: 0 auto; /* Center image if container is wider */
+}
+
+.profile-image.squared {
+    border-radius: 0;
+}
+
+.profile-image.rounded {
+    border-radius: 50%;
+}

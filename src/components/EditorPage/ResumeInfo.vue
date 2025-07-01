@@ -18,6 +18,42 @@
                 </div>
             </div>
 
+            <!-- Profile Picture Section -->
+            <div class="editor-section" data-section="profilePicture">
+                <div class="section-header">
+                    <div class="d-flex align-center w-100">
+                        <span class="section-title">
+                            Profile Picture
+                        </span>
+                    </div>
+                </div>
+                <div class="section-content">
+                    <v-file-input
+                        label="Upload Picture"
+                        variant="outlined"
+                        density="comfortable"
+                        accept="image/*"
+                        @change="handleImageUpload"
+                        prepend-icon="ph-camera"
+                        class="mb-2"
+                        clearable
+                        @click:clear="clearImage"
+                        aria-label="Upload profile picture"
+                    />
+                    <div v-if="props.resumeData.personal.imageDataUrl" class="mb-2">
+                        <img :src="props.resumeData.personal.imageDataUrl" alt="Profile Preview" style="max-width: 100%; height: auto; max-height: 150px; border-radius: 4px;"/>
+                    </div>
+                    <v-radio-group v-model="props.resumeData.personal.imagePosition" inline label="Position" class="mb-1">
+                        <v-radio label="Main Content" value="main" density="comfortable"></v-radio>
+                        <v-radio label="Sidebar" value="sidebar" density="comfortable"></v-radio>
+                    </v-radio-group>
+                    <v-radio-group v-model="props.resumeData.personal.imageStyle" inline label="Style" class="mb-1">
+                        <v-radio label="Squared" value="squared" density="comfortable"></v-radio>
+                        <v-radio label="Rounded" value="rounded" density="comfortable"></v-radio>
+                    </v-radio-group>
+                </div>
+            </div>
+
             <!-- Experience Section -->
             <div class="editor-section" data-section="experience">
                 <div class="section-header">
@@ -438,6 +474,24 @@ onMounted(() => {
 onUnmounted(() => {
     document.removeEventListener('click', handleClickOutside)
 })
+
+// Image Upload Handler
+const handleImageUpload = (event) => {
+    const file = event.target.files[0]
+    if (file) {
+        const reader = new FileReader()
+        reader.onload = (e) => {
+            props.resumeData.personal.imageDataUrl = e.target.result
+            emit('change')
+        }
+        reader.readAsDataURL(file)
+    }
+}
+
+const clearImage = () => {
+    props.resumeData.personal.imageDataUrl = ''
+    emit('change')
+}
 
 // Custom Section Modal Methods
 const openCustomSectionModal = (index = -1) => {

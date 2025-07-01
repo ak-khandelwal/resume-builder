@@ -6,7 +6,10 @@ export class ResumeDataV2 {
         this.personal = {
             name: data.personal?.name || '',
             title: data.personal?.title || '',
-            visible: data.personal?.visible ?? true
+            visible: data.personal?.visible ?? true,
+            imageDataUrl: data.personal?.imageDataUrl || '',
+            imagePosition: data.personal?.imagePosition || 'main', // 'main' or 'sidebar'
+            imageStyle: data.personal?.imageStyle || 'squared' // 'squared' or 'rounded'
         };
         this.experiences = (data.experiences || []).map(exp => ({
             title: exp.title || '',
@@ -71,7 +74,10 @@ export class ResumeDataV2 {
             personal: {
                 name: 'John Doe',
                 title: 'Software Engineer',
-                visible: true
+                visible: true,
+                imageDataUrl: '',
+                imagePosition: 'main',
+                imageStyle: 'squared'
             },
             experiences: [
                 {

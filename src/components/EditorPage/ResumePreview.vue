@@ -5,6 +5,9 @@
         <div class="container" :class="{ 'sidebar-left': sidebarPosition === 'left' }">
 
           <div class="sidebar" v-if="isSidebarPresent">
+            <div v-if="resumeData.personal.imageDataUrl && resumeData.personal.imagePosition === 'sidebar'" class="profile-image-container">
+              <img :src="resumeData.personal.imageDataUrl" :class="['profile-image', resumeData.personal.imageStyle]" alt="Profile Picture" />
+            </div>
             <template v-for="(section, index) in sidebarCustomSections" :key="index">
               <h2>{{ section.title }}</h2>
               <div v-html="processContent(section.content)"></div>
@@ -12,6 +15,9 @@
           </div>
 
           <div class="content">
+            <div v-if="resumeData.personal.imageDataUrl && resumeData.personal.imagePosition === 'main'" class="profile-image-container main-image-container">
+              <img :src="resumeData.personal.imageDataUrl" :class="['profile-image', resumeData.personal.imageStyle]" alt="Profile Picture" />
+            </div>
             <h1>{{ resumeData.personal.name || 'Your Name' }}</h1>
             <h2 class="subtitle">{{ resumeData.personal.title }}</h2>
 

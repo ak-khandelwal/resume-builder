@@ -63,6 +63,20 @@ const vuetify = createVuetify({
 // Make Vuetify available globally
 config.global.plugins = [vuetify]
 
+// Mock visualViewport
+global.visualViewport = {
+    width: 1920,
+    height: 1080,
+    scale: 1,
+    offsetTop: 0,
+    offsetLeft: 0,
+    onresize: null,
+    onscroll: null,
+    addEventListener: vi.fn(),
+    removeEventListener: vi.fn(),
+    dispatchEvent: vi.fn(),
+}
+
 // Mock window.location for navigation
 const originalLocation = window.location;
 delete window.location;

@@ -113,10 +113,91 @@ describe('ResumePreview Content', () => {
         })
     })
 
-    describe('Personal Information', () => {
+    describe('Personal Information & Profile Picture', () => {
         it('displays personal information correctly', () => {
             expect(wrapper.text()).toContain('John Doe')
             expect(wrapper.text()).toContain('Software Engineer')
+        })
+
+        it('does not display profile picture if imageDataUrl is empty', () => {
+            const img = wrapper.find('.profile-image')
+            expect(img.exists()).toBe(false)
+        })
+
+        it('displays profile picture in main content when specified', async () => {
+            const updatedData = new ResumeDataV2({
+                ...mockResumeData.toJSON(),
+                personal: {
+                    ...mockResumeData.personal,
+                    imageDataUrl: 'data:image/png;base64,test',
+                    imagePosition: 'main',
+                    imageStyle: 'squared'
+                }
+            })
+            await wrapper.setProps({ resumeData: updatedData })
+
+            const mainImageContainer = wrapper.find('.main-image-container')
+            expect(mainImageContainer.exists()).toBe(true)
+            const img = mainImageContainer.find('.profile-image')
+            expect(img.exists()).toBe(true)
+            expect(img.attributes('src')).toBe('data:image/png;base64,test')
+            expect(img.classes()).toContain('squared')
+        })
+
+        it('displays profile picture in sidebar when specified', async () => {
+            const updatedData = new ResumeDataV2({
+                ...mockResumeData.toJSON(),
+                personal: {
+                    ...mockResumeData.personal,
+                    imageDataUrl: 'data:image/jpeg;base64,test2',
+                    imagePosition: 'sidebar',
+                    imageStyle: 'rounded'
+                }
+            })
+            await wrapper.setProps({ resumeData: updatedData })
+
+            const sidebar = wrapper.find('.sidebar')
+            expect(sidebar.exists()).toBe(true)
+
+            const sidebarImageContainer = sidebar.find('.profile-image-container')
+            expect(sidebarImageContainer.exists()).toBe(true)
+
+            const img = sidebarImageContainer.find('.profile-image')
+            expect(img.exists()).toBe(true)
+            expect(img.attributes('src')).toBe('data:image/jpeg;base64,test2')
+            expect(img.classes()).toContain('rounded')
+        })
+
+        it('applies correct class for squared image style', async () => {
+             const updatedData = new ResumeDataV2({
+                ...mockResumeData.toJSON(),
+                personal: {
+                    ...mockResumeData.personal,
+                    imageDataUrl: 'data:image/png;base64,test',
+                    imagePosition: 'main',
+                    imageStyle: 'squared'
+                }
+            })
+            await wrapper.setProps({ resumeData: updatedData })
+            const img = wrapper.find('.profile-image')
+            expect(img.classes()).toContain('squared')
+            expect(img.classes()).not.toContain('rounded')
+        })
+
+        it('applies correct class for rounded image style', async () => {
+            const updatedData = new ResumeDataV2({
+                ...mockResumeData.toJSON(),
+                personal: {
+                    ...mockResumeData.personal,
+                    imageDataUrl: 'data:image/png;base64,test',
+                    imagePosition: 'main',
+                    imageStyle: 'rounded'
+                }
+            })
+            await wrapper.setProps({ resumeData: updatedData })
+            const img = wrapper.find('.profile-image')
+            expect(img.classes()).toContain('rounded')
+            expect(img.classes()).not.toContain('squared')
         })
     })
 

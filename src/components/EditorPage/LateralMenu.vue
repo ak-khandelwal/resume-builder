@@ -37,6 +37,14 @@
                 </v-tooltip>
                 <v-tooltip location="right" :model-value="showAllTooltips">
                     <template v-slot:activator="{ props: tooltipProps }">
+                        <v-btn v-bind="tooltipProps" icon="ph-camera"
+                            :color="currentSection === 'profilePicture' ? 'primary' : 'grey'" variant="text" class="menu-btn"
+                            @click="scrollToSection('profilePicture')" :class="{ 'active': currentSection === 'profilePicture' }" />
+                    </template>
+                    Profile Picture
+                </v-tooltip>
+                <v-tooltip location="right" :model-value="showAllTooltips">
+                    <template v-slot:activator="{ props: tooltipProps }">
                         <v-btn v-bind="tooltipProps" icon="ph-briefcase"
                             :color="currentSection === 'experience' ? 'primary' : 'grey'" variant="text"
                             class="menu-btn" @click="scrollToSection('experience')"
